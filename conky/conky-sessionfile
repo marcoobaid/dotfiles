@@ -1,0 +1,1 @@
+conky -c /home/abumasood/.config/conky/ET-Arcolinux-Fofo-LUA.conkyrc & sleep 1s

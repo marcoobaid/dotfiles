@@ -1,0 +1,12 @@
+#Marco's Personal Aliases
+alias ttc="tty-clock -c -C 4"
+alias pipez="pipes -t 6 -f 20"
+alias jerror="sudo journalctl -p 3 -xb"
+alias jclear="sudo journalctl --vacuum-size=0M "
+alias jvacc1d="sudo journalctl --vacuum-time=1d"
+alias cr="curseradio"
+alias vi="vim"
+alias vbm="VBoxManage"
+fortune | cowsay | lolcat
+
+
