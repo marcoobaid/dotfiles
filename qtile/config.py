@@ -374,7 +374,7 @@ def init_widgets_list():
               #          padding = 10,
               #          foreground = colors[2],
               #          background = colors[1]
-              #          ),
+              #          ),             
                widget.CurrentLayout(
                         font = "TerminessTTF Nerd Font Medium",
                         fontsize = 15,
@@ -548,30 +548,30 @@ def init_widgets_list():
                         font = "TerminessTTF Nerd Font Medium",
                         fontsize = 13,
                         ),
-               widget.Sep(
-                        linewidth = 1,
-                        padding = 10,
-                        foreground = colors[1],
-                        background = colors[2]
+               #widget.Sep(
+                        #linewidth = 1,
+                        #padding = 10,
+                        #foreground = colors[1],
+                        #background = colors[2]
+                        #),
+               widget.TextBox(
+                        font="Arial", foreground= colors[2],
+                        text="◤", fontsize=50, padding=-1
                         ),
                widget.Systray(
-                        background=colors[2],
+                        background=colors[1],
                         foreground = colors[1],
                         icon_size=20,
-                        padding = 4
-                        ),
-              widget.TextBox(
-                        font="Arial", foreground= colors[2],
-                        text="◤ ", fontsize=50, padding=-1
-                        ),
-              widget.LaunchBar(
-                        #progs=[('logout', 'qshell:self.qtile.cmd_shutdown()', 'logout from qtile')],
-                        progs=[('logout', 'oblogout', 'logout from qtile')],
-                        background=colors[1],
-                        #foreground = colors[1],
-                        default_icon = '/usr/share/icons/Arc/actions/16/system-shutdown.png',
-                        padding = 0
-                        ),
+                        padding = 5
+                        ),              
+              #widget.LaunchBar(
+                        ##progs=[('logout', 'qshell:self.qtile.cmd_shutdown()', 'logout from qtile')],
+                        #progs=[('logout', 'oblogout', 'logout from qtile')],
+                        #background=colors[1],
+                        ##foreground = colors[1],
+                        #default_icon = '/usr/share/icons/Arc/actions/16/system-shutdown.png',
+                        #padding = 0
+                        #),
               
               ]
     return widgets_list
