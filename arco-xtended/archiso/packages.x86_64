@@ -222,10 +222,10 @@ system-config-printer
 
 #printer extra for hplip
 pyqt5-common
-#python-pillow
-#python-pip
-#python-pyqt5
-#python-reportlab
+python-pillow
+python-pip
+python-pyqt5
+python-reportlab
 
 #tumbler
 tumbler
@@ -684,4 +684,8 @@ vicious
 
 #desktop specific herbstluftwm
 herbstluftwm
+
+#desktop specific for qtile
+qtile
+python-psutil
 
