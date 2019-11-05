@@ -73,7 +73,7 @@ settings_table = {
    },
 
 {
-      name='upspeedf', arg='wlp2s0', max=150,
+      name='upspeedf', arg='wlan0', max=150,
       bg_colour=0x111111, bg_alpha=0.4,
       fg_colour=0xFF9401, fg_alpha=1,
       x=35, y=335,
@@ -91,7 +91,7 @@ settings_table = {
    },
 
 {
-      name='downspeedf', arg='wlp2s0', max=300,
+      name='downspeedf', arg='wlan0', max=300,
       bg_colour=0x111111, bg_alpha=0.4,
       fg_colour=0x00FFFF, fg_alpha=1,
       x=35, y=435,
@@ -109,7 +109,7 @@ settings_table = {
    },
 
 {
-      name='wireless_link_qual_perc', arg='wlp2s0', max=100,
+      name='wireless_link_qual_perc', arg='wlan0', max=100,
       bg_colour=0x111111, bg_alpha=0.4,
       fg_colour=0xFF2C34, fg_alpha=1.0,
       x=35, y=535,

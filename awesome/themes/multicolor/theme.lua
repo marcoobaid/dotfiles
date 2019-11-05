@@ -9,13 +9,15 @@ local gears = require("gears")
 local lain  = require("lain")
 local awful = require("awful")
 local wibox = require("wibox")
+local dpi   = require("beautiful.xresources").apply_dpi
 
-local os = { getenv = os.getenv, setlocale = os.setlocale }
+local os = os
 local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 local theme                                     = {}
 theme.confdir                                   = os.getenv("HOME") .. "/.config/awesome/themes/multicolor"
-theme.wallpaper                                 = theme.confdir .. "/wall.jpg"
+--theme.wallpaper                                 = theme.confdir .. "/wallpaper.jpg"
+--theme.wallpaper                                 = "/usr/share/backgrounds/arcolinux/arco-wallpaper.jpg"
 theme.font                                      = "Noto Sans Regular 11"
 theme.taglist_font                              = "Noto Sans Regular 13"
 theme.menu_bg_normal                            = "#000000"
@@ -27,12 +29,13 @@ theme.fg_normal                                 = "#aaaaaa"
 theme.fg_focus                                  = "#ff8c00"
 theme.fg_urgent                                 = "#af1d18"
 theme.fg_minimize                               = "#ffffff"
-theme.border_width                              = 2
+theme.border_width                              = dpi(2)
 theme.border_normal                             = "#1c2022"
 theme.border_focus                              = "#606060"
 theme.border_marked                             = "#3ca4d8"
 theme.menu_border_width                         = 0
-theme.menu_width                                = 140
+theme.menu_height                               = dpi(25)
+theme.menu_width                                = dpi(260)
 theme.menu_submenu_icon                         = theme.confdir .. "/icons/submenu.png"
 theme.menu_fg_normal                            = "#aaaaaa"
 theme.menu_fg_focus                             = "#ff8c00"
@@ -58,7 +61,7 @@ theme.taglist_squares_sel                       = theme.confdir .. "/icons/squar
 theme.taglist_squares_unsel                     = theme.confdir .. "/icons/square_b.png"
 theme.tasklist_plain_task_name                  = true
 theme.tasklist_disable_icon                     = true
-theme.useless_gap                               = 0
+theme.useless_gap                               = 5
 theme.layout_tile                               = theme.confdir .. "/icons/tile.png"
 theme.layout_tilegaps                           = theme.confdir .. "/icons/tilegaps.png"
 theme.layout_tileleft                           = theme.confdir .. "/icons/tileleft.png"
@@ -102,7 +105,7 @@ local mytextclock = wibox.widget.textclock(markup("#7788af", "%A %d %B ") .. mar
 mytextclock.font = theme.font
 
 -- Calendar
-theme.cal = lain.widget.calendar({
+theme.cal = lain.widget.cal({
     attach_to = { mytextclock },
     notification_preset = {
         font = "Noto Sans Mono Medium 10",
@@ -125,18 +128,20 @@ theme.weather = lain.widget.weather({
 })
 
 -- / fs
---local fsicon = wibox.widget.imagebox(theme.widget_fs)
---theme.fs = lain.widget.fs({
- --   notification_preset = { font = "Noto Sans Mono Medium 10", fg = theme.fg_normal },
-  --  settings  = function()
-     --   widget:set_markup(markup.fontfg(theme.font, "#80d9d8", fs_now.used .. "% "))
-   -- end
---})
+--[[ commented because it needs Gio/Glib >= 2.54
+local fsicon = wibox.widget.imagebox(theme.widget_fs)
+theme.fs = lain.widget.fs({
+    notification_preset = { font = "Noto Sans Mono Medium 10", fg = theme.fg_normal },
+    settings  = function()
+        widget:set_markup(markup.fontfg(theme.font, "#80d9d8", string.format("%.1f", fs_now["/"].used) .. "% "))
+    end
+})
+--]]
 
---[[ Mail IMAP check
--- commented because it needs to be set before use
+-- Mail IMAP check
+--[[ commented because it needs to be set before use
 local mailicon = wibox.widget.imagebox()
-local mail = lain.widget.imap({
+theme.mail = lain.widget.imap({
     timeout  = 180,
     server   = "server",
     mail     = "mail",
@@ -291,7 +296,7 @@ function theme.at_screen_connect(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 20, bg = theme.bg_normal, fg = theme.fg_normal })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(20), bg = theme.bg_normal, fg = theme.fg_normal })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -306,7 +311,6 @@ function theme.at_screen_connect(s)
         nil,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            wibox.widget.systray(),
             --mailicon,
             --mail.widget,
             mpdicon,
@@ -329,12 +333,13 @@ function theme.at_screen_connect(s)
             bat.widget,
             clockicon,
             mytextclock,
+            wibox.widget.systray(),
 
         },
     }
 
     -- Create the bottom wibox
-    s.mybottomwibox = awful.wibar({ position = "bottom", screen = s, border_width = 0, height = 20, bg = theme.bg_normal, fg = theme.fg_normal })
+    s.mybottomwibox = awful.wibar({ position = "bottom", screen = s, border_width = 0, height = dpi(20), bg = theme.bg_normal, fg = theme.fg_normal })
 
     -- Add widgets to the bottom wibox
     s.mybottomwibox:setup {

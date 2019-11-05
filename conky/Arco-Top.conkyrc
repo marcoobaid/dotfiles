@@ -61,7 +61,7 @@ conky.config = {
 	--Arch Duoscreen
 	--gap_x = -1910,
 	gap_x = 0,									-- pixels between right or left border
-	gap_y = 30,									-- pixels between bottom or left border
+	gap_y = 40,									-- pixels between bottom or left border
 	minimum_height = 10,						-- minimum height of window
 	minimum_width = 900,						-- minimum height of window
 	maximum_width = 900,						-- maximum height of window
@@ -89,7 +89,7 @@ conky.config = {
 
 	extra_newline = false,						-- extra newline at the end - for asesome's wiboxes
 	format_human_readable = true,				-- KiB, MiB rather then number of bytes
-	font = 'Monospace:bold:size=9',  -- font for complete conky unless in code defined
+	font = 'Ubuntu Mono:bold:size=10',           -- font for complete conky unless in code defined
 	max_text_width = 0,							-- 0 will make sure line does not get broken if width too smal
 	max_user_text = 16384,						-- max text in conky default 16384
 	override_utf8_locale = true,				-- force UTF8 requires xft
@@ -105,7 +105,7 @@ conky.config = {
 
 	own_window = true,							-- create your own window to draw
 	own_window_argb_value = 0,				    -- real transparency - composite manager required 0-255
-	own_window_argb_visual = false,				-- use ARGB - composite manager required
+	own_window_argb_visual = true,				-- use ARGB - composite manager required
 	own_window_class = 'Conky',					-- manually set the WM_CLASS name for use with xprop
 	own_window_colour = '#000000',				-- set colour if own_window_transparent no
 	own_window_hints = 'undecorated,below,above,sticky,skip_taskbar,skip_pager',  -- if own_window true - just hints - own_window_type sets it
@@ -141,7 +141,7 @@ ${execi 6000 lsb_release -d | grep 'Descr'|awk {'print $2'}}  ${execi 6000 lsb_r
 ${else}${if_match ${fs_used_perc /} < 90} ${fs_used_perc /}\
 ${else}${color9}${fs_used_perc /}${color}${endif}${endif}% \
 of ${fs_size /}\
-${goto 280}/Home ${if_match ${fs_used_perc /home} < 10}  ${fs_used_perc /home}\
+${goto 290}/Home ${if_match ${fs_used_perc /home} < 10}  ${fs_used_perc /home}\
 ${else}${if_match ${fs_used_perc /home} < 90} ${fs_used_perc /home}\
 ${else}${color9}${fs_used_perc /home}${color}${endif}${endif}% \
 of ${fs_size /home}\
@@ -152,6 +152,6 @@ ${goto 560}RAM ${if_match ${memperc} < 10}  ${memperc}\
 ${else}${if_match ${memperc} < 100} ${memperc}\
 ${else}${color9}${memperc}${color}${endif}${endif}% of ${memmax}\
 ${goto 690}Read ${diskio_read}\
-${goto 760}Write ${diskio_write}\
+${goto 765}Write ${diskio_write}\
 ${alignr}${uptime_short} \
 ]];

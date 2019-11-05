@@ -63,13 +63,13 @@ conky.config = {
 
 	--Placement
 
-	alignment = 'middle_middle',		            -- top_left,top_middle,top_right,bottom_left,bottom_middle,bottom_right,
+	alignment = 'top_right',		            -- top_left,top_middle,top_right,bottom_left,bottom_middle,bottom_right,
 												-- middle_left,middle_middle,middle_right,none
 	--Arch Duoscreen
 	--gap_x = -1910,
-	gap_x = 0,									-- pixels between right or left border
-	gap_y = 0,									-- pixels between bottom or left border
-	minimum_height = 208,						-- minimum height of window
+	gap_x = 30,									-- pixels between right or left border
+	gap_y = 50,									-- pixels between bottom or left border
+	minimum_height = 100,						-- minimum height of window
 	minimum_width = 208,						-- minimum height of window
 	maximum_width = 208,						-- maximum height of window
 
@@ -96,7 +96,7 @@ conky.config = {
 
 	extra_newline = false,						-- extra newline at the end - for asesome's wiboxes
 	format_human_readable = true,				-- KiB, MiB rather then number of bytes
-	font = 'Noto Sans:bold:size=12',  			-- font for complete conky unless in code defined
+	font = 'Droid Sans:bold:size=14',  			-- font for complete conky unless in code defined
 	max_text_width = 0,							-- 0 will make sure line does not get broken if width too smal
 	max_user_text = 16384,						-- max text in conky default 16384
 	override_utf8_locale = true,				-- force UTF8 requires xft
@@ -145,7 +145,7 @@ conky.config = {
 };
 
 conky.text = [[
-${image $HOME/.config/conky/images/arcolinux-200x200.png -s 150x150}
+#${image $HOME/.config/conky/images/arcolinux-200x200.png -s 150x150}
 ${voffset 100}${alignr}${time %d}
 ${alignr}${time %B}
 ${alignr}${time %A}

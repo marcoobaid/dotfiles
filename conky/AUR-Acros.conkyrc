@@ -90,7 +90,7 @@ conky.config = {
 	extra_newline = false,						-- extra newline at the end - for asesome's wiboxes
 	format_human_readable = true,				-- KiB, MiB rather then number of bytes
 	font = 'SourceSansPro-ExtraLight:size=11:oblique',  	-- font for complete conky unless in code defined
-	max_text_width = 0,							-- 0 will make sure line does not get broken if width too smal
+	max_text_width = 0,							-- 0 will make sure line does not get broken if width too small
 	max_user_text = 16384,						-- max text in conky default 16384
 	override_utf8_locale = true,				-- force UTF8 requires xft
 	short_units = true,							-- shorten units from KiB to k
@@ -137,6 +137,7 @@ conky.config = {
 
 conky.text = [[
 ${image ~/.config/conky/images/arcolinux-white-100x100.png -p 170,0 -s 50x50}
+
 ${color1}${font SourceSansPro-ExtraLight:size=18:weight:bold}${color2}${execi 6000 lsb_release -d | grep 'Descr'|awk {'print $2 " " $3" " $4" " $5'}}
 ${color1}${hr 2}
 ${voffset -10}${color1}${font SourceSansPro-ExtraLight:size=10:weight:bold:italic}${color6}$sysname $kernel ${alignr}${execi 6000 lsb_release -a | grep 'Release'|awk {'print $2""$3""$4""$5'}}${color}
