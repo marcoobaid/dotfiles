@@ -29,8 +29,7 @@ import os
 import re
 import socket
 import subprocess
-from libqtile.config import Drag, Key, Screen, Group, Drag, Click, Match, Rule
-from libqtile.config import ScratchPad, DropDown
+from libqtile.config import Drag, Key, Screen, Group, Drag, Click, Rule
 from libqtile.command import lazy, Client
 from libqtile import layout, bar, widget, hook
 from libqtile.widget import Spacer
@@ -42,7 +41,6 @@ mod = "mod4"
 mod1 = "alt"
 mod2 = "control"
 home = os.path.expanduser('~')
-client = Client()
 
 
 @lazy.function
@@ -57,16 +55,12 @@ def window_to_next_group(qtile):
         i = qtile.groups.index(qtile.currentGroup)
         qtile.currentWindow.togroup(qtile.groups[i + 1].name)
 
+
 keys = [
-
-# FUNCTION KEYS
-
-    #Key([], "F12", lazy.spawn('xfce4-terminal --drop-down')),
 
 # SUPER + FUNCTION KEYS
 
     Key([mod], "e", lazy.spawn('atom')),
-    Key([mod], "c", lazy.spawn('conky-toggle')),
     Key([mod], "f", lazy.window.toggle_fullscreen()),
     Key([mod], "m", lazy.spawn('pragha')),
     Key([mod], "q", lazy.window.kill()),
@@ -77,7 +71,6 @@ keys = [
     Key([mod], "x", lazy.spawn('oblogout')),
     Key([mod], "Escape", lazy.spawn('xkill')),
     Key([mod], "Return", lazy.spawn('termite')),
-    Key([mod], "KP_Enter", lazy.spawn('termite')),
     Key([mod], "F1", lazy.spawn('vivaldi-stable')),
     Key([mod], "F2", lazy.spawn('atom')),
     Key([mod], "F3", lazy.spawn('inkscape')),
@@ -102,8 +95,6 @@ keys = [
 
 # CONTROL + ALT KEYS
 
-    Key(["mod1", "control"], "Next", lazy.spawn('conky-rotate -n')),
-    Key(["mod1", "control"], "Prior", lazy.spawn('conky-rotate -p')),
     Key(["mod1", "control"], "a", lazy.spawn('xfce4-appfinder')),
     Key(["mod1", "control"], "b", lazy.spawn('thunar')),
     Key(["mod1", "control"], "c", lazy.spawn('catfish')),
@@ -125,7 +116,6 @@ keys = [
 
 # ALT + ... KEYS
 
-    Key(["mod1"], "k", lazy.spawn('slimlock')),
     Key(["mod1"], "f", lazy.spawn('variety -f')),
     Key(["mod1"], "h", lazy.spawn('termite -e htop')),
     Key(["mod1"], "n", lazy.spawn('variety -n')),
@@ -273,39 +263,8 @@ group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0",]
 group_labels = ["", "", "", "", "", "", "", "", "", "",]
 #group_labels = ["Web", "Edit", "Ink", "Gimp", "Meld", "Vlc", "VB", "Thunar", "Mail", "Music",]
 
-group_layouts = ["monadtall", "monadtall", "bsp", "monadtall", "monadtall", "monadtall", "treetab", "monadtall", "monadtall", "monadtall",]
+group_layouts = ["monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall",]
 #group_layouts = ["monadtall", "matrix", "monadtall", "bsp", "monadtall", "matrix", "monadtall", "bsp", "monadtall", "monadtall",]
-
-group_exclusives = [False, False, False, False, False, False, False, False, False, False,]
-
-group_persists = [True, True, True, True, True, True, True, True, True, True,]
-
-group_inits = [True, True, True, True, True, True, True, True, True, True,]
-
-###group_spawns = ["leafpad", None, None, None, None, None, None, None, None, None,]
-
-group_matches = [
-    #Group 1
-    [Match(wm_class=["vivaldi-stable", "Vivaldi-stable", ])],
-    #Group 2
-    [Match(wm_class=["subl3", "Subl3", ])],
-    #Group 3
-    [Match(wm_class=["termite", "Termite", "urxvt", "URxvt", ])],
-    #Group 4
-    None, #[Match(wm_class=["Firefox", "firefox", "Navigator", ])],
-    #Group 5
-    None,
-    #Group 6
-    [Match(wm_class=["pragha", ])],
-    #Group 7
-    [Match(wm_class=["VirtualBox Manager", "VirtualBox Machine", ])],
-    #Group 8 
-    [Match(wm_class=["thunar", "Thunar", ])],
-    #Group 9  
-    None,
-    #Group 0
-    [Match(wm_class=["discord", ])],
-]
 
 for i in range(len(group_names)):
     groups.append(
@@ -313,12 +272,6 @@ for i in range(len(group_names)):
             name=group_names[i],
             layout=group_layouts[i].lower(),
             label=group_labels[i],
-            matches=group_matches[i],
-	        exclusive=group_exclusives[i],
-            persist=group_persists[i],
-            init=group_inits[i],
-            ###spawn=group_spawns,
-
         ))
 
 for i in groups:
@@ -336,20 +289,6 @@ for i in groups:
         Key([mod, "shift"], i.name, lazy.window.togroup(i.name) , lazy.group[i.name].toscreen()),
     ])
 
-groups.append(
-    ScratchPad("scratchpad", [
-        # define a drop down terminal.
-        # it is placed in the upper third of screen by default.
-        #DropDown("atlassian", "firefox", opacity=0.88, height=0.55, width=0.80, ),
-        DropDown("term", "/usr/bin/xfce4-terminal", on_focus_lost_hide=False, opacity=1.00, height=0.55, width=0.75, ),
-]), )
-
-keys.extend([
-    # Scratchpad
-    # toggle visibiliy of above defined DropDown named "term"
-    #Key([], 'F11', lazy.group['scratchpad'].dropdown_toggle('atlassian')),
-    Key([], 'F12', lazy.group['scratchpad'].dropdown_toggle('term')),
-])
 
 def init_layout_theme():
     return {"margin":5,
@@ -375,28 +314,16 @@ layouts = [
 # COLORS FOR THE BAR
 
 def init_colors():
-    return [["#598234", "#598234"], # color 0
-           ["#68829E", "#68829E"], # color 1
-           ["#505160", "#021C1E"], # color 2
-           ["#68829E", "#68829E"], # color 3
-           ["#598234", "#598234"], # color 4
-           ["#AEBD38", "#AEBD38"], # color 5
-           ["#cd1f3f", "#cd1f3f"], # color 6
-           ["#AEBD38", "#AEBD38"], # color 7 #1a2f56 #62FF00 #c0c5ce
-           ["#68829E", "#68829E"], # color 8
-           ["#DDFFFF", "#DDFFFF"]] # color 9
-
-#    return [["#68CF40", "#68CF40"], # color 0
-#            ["#2C7873", "#2C7873"], # color 1
-#            ["#021C1E", "#021C1E"], # color 2
-#            ["#2C7873", "#2C7873"], # color 3
-#            ["#68CF40", "#68CF40"], # color 4
-#            ["#6fb98f", "#6fb98f"], # color 5
-#            ["#cd1f3f", "#cd1f3f"], # color 6
-#            ["#6fb98f", "#6fb98f"], # color 7 #1a2f56 #62FF00 #c0c5ce
-#            ["#2C7873", "#2C7873"], # color 8
-#            ["#c0c5ce", "#c0c5ce"]] # color 9
-
+    return [["#62FF00", "#62FF00"], # color 0
+            ["#2C7873", "#2C7873"], # color 1
+            ["#021C1E", "#021C1E"], # color 2
+            ["#2C7873", "#2C7873"], # color 3
+            ["#62FF00", "#62FF00"], # color 4
+            ["#6fb98f", "#6fb98f"], # color 5
+            ["#cd1f3f", "#cd1f3f"], # color 6
+            ["#6fb98f", "#6fb98f"], # color 7 #1a2f56 #62FF00 #c0c5ce
+            ["#2C7873", "#2C7873"], # color 8
+            ["#2C7873", "#2C7873"]] # color 9
 
 #def init_colors():
 #   return [["#2F343F", "#2F343F"], # color 0
@@ -408,7 +335,7 @@ def init_colors():
 #           ["#cd1f3f", "#cd1f3f"], # color 6
 #           ["#773d8e", "#773d8e"], # color 7 #1a2f56 #62FF00
 #           ["#6790eb", "#6790eb"], # color 8
-#           ["#a9a9a9", "#a9a9a9"]] # color 9
+#           ["#a9a9a9", "#a9a9a9"]] # color 
 
 colors = init_colors()
 
@@ -421,7 +348,7 @@ def init_widgets_defaults():
     return dict(font="Noto Sans",
                 fontsize = 12,
                 padding = 2,
-                background=colors[2])
+                background=colors[1])
 
 widget_defaults = init_widgets_defaults()
 
@@ -429,33 +356,26 @@ def init_widgets_list():
     prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
     widgets_list = [
               widget.TextBox(
-                        font="Arial", foreground= colors[1],
+                        font="Arial", foreground= colors[2],
                         text="◢", fontsize=73, padding=-7
                         ),
               widget.GroupBox(font="FontAwesome",
-                        disable_drag = True,
                         fontsize = 16,
                         margin_y = -1,
                         margin_x = 0,
                         padding_y = 6,
                         padding_x = 5,
                         borderwidth = 0,
-                        active = colors[9],
-                        inactive = colors[2],
+                        active = colors[7],
+                        inactive = colors[1],
                         rounded = False,
-                        #highlight_method = "text",
-                        highlight_method = 'line',
-                        highlight_color = ['505160', '68829E'],
-                        this_current_screen_border = colors[9],
-                        #this_screen_border = 'FF0000',
-                        center_aligned = False,
-                        #rounded = True,
-                        hide_unused = False,
-                        foreground = colors[2],
-                        background = colors[1]
+                        highlight_method = "text",
+                        this_current_screen_border = colors[4],
+                        foreground = colors[1],
+                        background = colors[2]
                         ),
                widget.TextBox(
-                        font="Arial", foreground= colors[1],
+                        font="Arial", foreground= colors[2],
                         text="◤", fontsize=73, padding=-7
                         ),
                widget.CurrentLayout(
@@ -472,8 +392,8 @@ def init_widgets_list():
                widget.Sep(
                         linewidth = 1,
                         padding = 10,
-                        foreground = colors[9],
-                        background = colors[2]
+                        foreground = colors[2],
+                        background = colors[1]
                         ),
                widget.WindowName(
                         font="TerminessTTF Nerd Font Medium",
@@ -516,15 +436,15 @@ def init_widgets_list():
                #          background = colors[1]
                #          ),
                widget.TextBox(
-                        font="Arial", foreground= colors[1],
+                        font="Arial", foreground= colors[2],
                         text="◢", fontsize=73, padding=-7
                         ),
                widget.TextBox(
                         font = "TerminessTTF Nerd Font Medium",
                         fontsize = 13,
                         text="  ",
-                        foreground=colors[2],
-                        background=colors[1],
+                        foreground=colors[1],
+                        background=colors[2],
                         padding = 0
                         ),
                widget.Pacman(
@@ -534,32 +454,32 @@ def init_widgets_list():
                         markup = True,
                         unavailable = colors[1],
                         update_interval = 60,
-                        foreground=colors[9],
-                        background=colors[1],
+                        foreground=colors[7],
+                        background=colors[2],
                         padding = 0
                         ),
                widget.Sep(
                         linewidth = 1,
                         padding = 10,
-                        foreground = colors[2],
-                        background = colors[1]
+                        foreground = colors[1],
+                        background = colors[2]
                         ),
                widget.TextBox(
                         font = "TerminessTTF Nerd Font Medium",
                         fontsize = 13,
                         text=" CPU ",
-                        foreground=colors[2],
-                        background=colors[1],
+                        foreground=colors[1],
+                        background=colors[2],
                         padding = 0
                         ),
                widget.CPUGraph(
-                        background = colors[1],
-                        foreground = colors[9],
-                        border_color = colors[2],
-                        fill_color = colors[9],
+                        foreground = colors[7],
+                        background = colors[2],
+                        border_color = colors[7],
+                        #fill_color = colors[1],
                         graph_color = colors[7],
                         border_width = 1,
-                        line_width = 2,
+                        line_width = 1,
                         core = "all",
                         type = "linefill",
                         width = 60
@@ -576,87 +496,86 @@ def init_widgets_list():
                widget.Sep(
                         linewidth = 1,
                         padding = 10,
-                        foreground = colors[2],
-                        background = colors[1]
+                        foreground = colors[1],
+                        background = colors[2]
                         ),
                widget.TextBox(
                         font = "TerminessTTF Nerd Font Medium",
                         fontsize = 13,
                         text=" MEM ",
-                        foreground=colors[2],
-                        background=colors[1],
+                        foreground=colors[1],
+                        background=colors[2],
                         padding = 0
                         ),
                widget.MemoryGraph(
-                         background = colors[1],
-                         border_color = colors[2],
-                         foreground=colors[9],
+                         background = colors[2],
+                         border_color = colors[7],
+                         foreground=colors[7],
                          graph_color = colors[7],
-                         fill_color = colors[9],
                          border_width = 1,
                          frequency = 1,
                          samples = 100,
-                         line_width = 2,
+                         line_width = 3,
                          type = 'linefill',
                          width = 60
                          ),
                widget.Sep(
                         linewidth = 1,
                         padding = 10,
-                        foreground = colors[2],
-                        background = colors[1]
+                        foreground = colors[1],
+                        background = colors[2]
                         ),
                 widget.TextBox(
                         font = "TerminessTTF Nerd Font Medium",
                         fontsize = 13,
                         text=" NET ",
-                        foreground=colors[2],
-                        background=colors[1],
+                        foreground=colors[1],
+                        background=colors[2],
                         padding = 0
                         ),
                   widget.NetGraph(
-                        background = colors[1],
-                        border_color = colors[2],
-                        foreground=colors[9],
+                        background = colors[2],
+                        border_color = colors[7],
+                        foreground=colors[7],
                         graph_color = colors[7],
                         border_width = 1,
                         frequency = 1,
                         samples = 100,
-                        line_width = 2,
+                        line_width = 3,
                         type = 'linefill',
-                        fill_color = colors[9],
-                        interface = 'enp2s0',
+                        fill_color = colors[7],
+                        interface = 'enp0s3',
                         start_pos = 'bottom',
                         width = 60
                         ),
                 widget.Sep(
                         linewidth = 1,
                         padding = 10,
-                        foreground = colors[2],
-                        background = colors[1]
+                        foreground = colors[1],
+                        background = colors[2]
                         ),
                widget.TextBox(
                         font="FontAwesome",
                         text="  ",
-                        foreground=colors[2],
-                        background=colors[1],
+                        foreground=colors[7],
+                        background=colors[2],
                         padding = 0,
                         fontsize=16
                         ),
                widget.Clock(
-                        foreground = colors[2],
-                        background = colors[1],
+                        foreground = colors[7],
+                        background = colors[2],
                         #format="%Y-%m-%d %H:%M",
                         format="%Y-%m-%d %a %I:%M %p",
                         font = "TerminessTTF Nerd Font Medium",
-                        fontsize = 15,
+                        fontsize = 13,
                         ),
                widget.TextBox(
-                        font="Arial", foreground= colors[1],
+                        font="Arial", foreground= colors[2],
                         text="◤", fontsize=73, padding=-7
                         ),
                widget.Systray(
-                        background=colors[2],
+                        background=colors[1],
                         foreground = colors[1],
                         icon_size=20,
                         padding = 5
@@ -682,8 +601,8 @@ widgets_screen2 = init_widgets_screen2()
 
 
 def init_screens():
-    return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=27, opacity=.85)),
-            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=27, opacity=.85))]
+    return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=26)),
+            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=26))]
 screens = init_screens()
 
 
@@ -739,7 +658,6 @@ floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'feh'},
     {'wmclass': 'Galculator'},
     {'wmclass': 'Oblogout'},
-    {'wmclass': 'xfce4-terminal'},
     {'wname': 'branchdialog'},
     {'wname': 'Open File'},
     {'wname': 'pinentry'},
@@ -747,6 +665,6 @@ floating_layout = layout.Floating(float_rules=[
 
 ],  fullscreen_border_width = 0, border_width = 0)
 auto_fullscreen = True
-focus_on_window_activation = "focus"
+focus_on_window_activation = "smart"
 
 wmname = "LG3D"
